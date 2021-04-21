@@ -1,0 +1,23 @@
+name: Compress JSON Files 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Compress all Json Files 
+        run: |
+            [ -e pattern_package.tar ] && rm pattern_package.tar
+            tar -cvf pattern_package.tar *.json
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v4.2.0
+        with:
+          commit_message: new json patterns packaged 
+          commit_user_name: 'Basic Shell'
+          commit_user_email: 'github-actions.shell@github.com'
+
